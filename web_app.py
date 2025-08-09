@@ -8,13 +8,13 @@ import os
 import tempfile
 import base64
 from werkzeug.utils import secure_filename
-from src.core.encryption import FileEncryption
+from src.core.encryption import EncryptionEngine
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
 # Initialize encryption
-encryption = FileEncryption()
+encryption = EncryptionEngine()
 
 @app.route('/')
 def index():
