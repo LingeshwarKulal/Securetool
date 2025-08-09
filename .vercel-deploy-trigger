@@ -1,0 +1,10 @@
+# Deployment Trigger
+
+This file forces Vercel to use the latest commit with fixed requirements.txt
+
+Current status: Ready for deployment with clean dependencies
+- No tkinter-dev dependency 
+- Only web-compatible packages
+- Simplified app.py structure
+
+Timestamp: 2025-08-10T01:59:00Z
