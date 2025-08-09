@@ -3,7 +3,9 @@
 python src/main.py
 ```
 Or on Windows: double-click `launch.bat`
-A desktop application for secure file and folder encryption using industry-standard AES encryption.
+# Secure File Encryption Tool
+
+A desktop and web application for secure file encryption using industry-standard AES encryption.
 
 ## Features
 
@@ -11,19 +13,42 @@ A desktop application for secure file and folder encryption using industry-stand
 - **AES-256 Encryption**: Military-grade security using the cryptography library
 - **Password Protection**: Strong password requirements with visual strength indicators
 - **Cross-Platform**: Works on Windows, macOS, and Linux
-- **User-Friendly Interface**: Simple browse-button GUI built with tkinter
+- **User-Friendly Interface**: Available as both desktop GUI and web application
 - **Data Integrity**: SHA-256 checksums ensure file integrity
 - **Batch Operations**: Process multiple files simultaneously
 
-## Installation
+## Deployment Options
 
-1. Clone this repository:
+### Option 1: Web Application (Recommended for Vercel)
+
+Deploy the web version to Vercel for online access:
+
+1. **Local Development:**
 ```bash
-git clone <repository-url>
-cd securityapplication
+pip install -r requirements.txt
+python web_app.py
 ```
 
-2. Install dependencies:
+2. **Deploy to Vercel:**
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Deploy
+vercel --prod
+```
+
+The web app will be available at your Vercel URL with a modern interface for file encryption/decryption.
+
+### Option 2: Desktop Application
+
+1. **Clone this repository:**
+```bash
+git clone https://github.com/LingeshwarKulal/Securetool.git
+cd Securetool
+```
+
+2. **Install dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
