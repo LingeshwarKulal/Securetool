@@ -1,23 +1,16 @@
 {
   "version": 2,
+  "name": "securetool-web",
   "builds": [
     {
-      "src": "app.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb"
-      }
+      "src": "index.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "app.py"
+      "dest": "/index.py"
     }
-  ],
-  "functions": {
-    "app.py": {
-      "memory": 1024
-    }
-  }
+  ]
 }

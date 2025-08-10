@@ -1,0 +1,5 @@
+🚨 CRITICAL: Vercel is using WRONG commit!
+Current Vercel deployment: 92b7a7d (OLD - has tkinter-dev)
+Latest GitHub commit: bc765ae (FIXED - no tkinter-dev)
+
+FORCE UPDATE NEEDED!
