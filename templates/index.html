@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure File Encryption Tool</title>
+    <title>Secure File Encryption Tool - Zplus Cyber Secure Technologies</title>
     <style>
         * {
             margin: 0;
@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -103,7 +104,7 @@
             position: relative;
             border: 2px dashed #d1d5db;
             border-radius: 12px;
-            padding: 40px 20px;
+            padding: 25px 15px;
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
@@ -128,14 +129,14 @@
         }
 
         .file-icon {
-            font-size: 48px;
+            font-size: 36px;
             color: #9ca3af;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .file-text {
             color: #6b7280;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .file-selected {
@@ -239,12 +240,83 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .contact-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .contact-header h3 {
+            color: #1e293b;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .contact-item:hover {
+            border-color: #2563eb;
+            background: #eff6ff;
+            transform: translateY(-1px);
+        }
+
+        .contact-icon {
+            font-size: 16px;
+        }
+
+        .contact-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .contact-link:hover {
+            color: #1d4ed8;
+        }
+
+        @media (max-width: 600px) {
+            .contact-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .contact-item {
+                min-width: auto;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🔐 Secure File Encryption</h1>
+            <h2 style="color: #fbbf24; font-size: 22px; font-weight: 700; margin-bottom: 10px; background-color: #000000; padding: 12px 20px; border-radius: 8px; border: 2px solid #fbbf24; text-align: center;">Zplus Cyber Secure Technologies Pvt Ltd</h2>
+            <h1 style="font-size: 24px;">🔐 Secure File Encryption</h1>
             <p>Encrypt and decrypt your files with military-grade AES-256 encryption</p>
         </div>
 
@@ -309,6 +381,23 @@
             </div>
 
             <div id="decrypt-result"></div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-section">
+        <div class="contact-header">
+            <h3>📞 Contact Us</h3>
+        </div>
+        <div class="contact-info">
+            <div class="contact-item">
+                <span class="contact-icon">📧</span>
+                <a href="mailto:info@zpluscybertech.com" class="contact-link">info@zpluscybertech.com</a>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📱</span>
+                <a href="tel:+919579917388" class="contact-link">+91 9579917388</a>
+            </div>
         </div>
     </div>
 

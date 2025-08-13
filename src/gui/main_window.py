@@ -38,7 +38,7 @@ class MainWindow:
         """Apply modern theme to the application"""
         # Configure root window
         self.root.configure(bg=ModernTheme.COLORS['background'])
-        self.root.title("🔒 Secure File Encryption Tool")
+        self.root.title("🔒 Secure File Encryption Tool - Zplus Cyber Secure Technologies")
         self.root.geometry("900x700")
         self.root.minsize(800, 600)
         
@@ -75,6 +75,11 @@ class MainWindow:
         title_label = tk.Label(title_frame, text="🔒 Secure File Encryption Tool",
                               font=('Segoe UI', 18, 'bold'), bg='white', fg='#1f2937')
         title_label.pack(side=tk.LEFT)
+        
+        # Company name
+        company_label = tk.Label(title_frame, text="Zplus Cyber Secure Technologies Pvt Ltd",
+                                font=('Segoe UI', 12, 'bold'), bg='white', fg='#2563eb')
+        company_label.pack(side=tk.LEFT, padx=(16, 0))
         
         # Version badge
         version_label = tk.Label(title_frame, text="v1.0", 
@@ -513,6 +518,11 @@ SUPPORTED FEATURES:
         )
         app_title.pack(anchor=tk.W)
         
+        company_title = ModernWidgets.create_subheading_label(
+            title_info, "Zplus Cyber Secure Technologies Pvt Ltd"
+        )
+        company_title.pack(anchor=tk.W)
+        
         version_label = ModernWidgets.create_body_label(title_info, "Version 1.0")
         version_label.pack(anchor=tk.W)
         
@@ -574,7 +584,7 @@ SUPPORTED FEATURES:
         footer_card.pack(fill=tk.X)
         
         copyright_label = ModernWidgets.create_body_label(
-            footer_card, "© 2025 Security Application Project"
+            footer_card, "© 2025 Zplus Cyber Secure Technologies Pvt Ltd"
         )
         copyright_label.pack(anchor=tk.W)
         

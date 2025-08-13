@@ -47,13 +47,21 @@ def encrypt_file():
         # Save uploaded file temporarily
         filename = secure_filename(file.filename)
         temp_input = tempfile.NamedTemporaryFile(delete=False)
+        temp_input.close()  # Close the file handle
         file.save(temp_input.name)
         
         # Create output file
         temp_output = tempfile.NamedTemporaryFile(delete=False, suffix='.enc')
+        temp_output.close()  # Close the file handle
         
         # Encrypt file
-        success, message = encryption.encrypt_file(temp_input.name, temp_output.name, password)
+        try:
+            encryption.encrypt_file(temp_input.name, temp_output.name, password)
+            success = True
+            message = "Encryption successful"
+        except Exception as e:
+            success = False
+            message = str(e)
         
         if success:
             # Read encrypted file and encode as base64
@@ -61,8 +69,14 @@ def encrypt_file():
                 encrypted_data = base64.b64encode(f.read()).decode()
             
             # Cleanup
-            os.unlink(temp_input.name)
-            os.unlink(temp_output.name)
+            try:
+                os.unlink(temp_input.name)
+            except OSError:
+                pass  # File might already be deleted
+            try:
+                os.unlink(temp_output.name)
+            except OSError:
+                pass  # File might already be deleted
             
             return jsonify({
                 'success': True,
@@ -91,14 +105,22 @@ def decrypt_file():
         # Save uploaded file temporarily
         filename = secure_filename(file.filename)
         temp_input = tempfile.NamedTemporaryFile(delete=False)
+        temp_input.close()  # Close the file handle
         file.save(temp_input.name)
         
         # Create output file
         original_name = filename.replace('.enc', '') if filename.endswith('.enc') else filename + '.dec'
         temp_output = tempfile.NamedTemporaryFile(delete=False)
+        temp_output.close()  # Close the file handle
         
         # Decrypt file
-        success, message = encryption.decrypt_file(temp_input.name, temp_output.name, password)
+        try:
+            encryption.decrypt_file(temp_input.name, temp_output.name, password)
+            success = True
+            message = "Decryption successful"
+        except Exception as e:
+            success = False
+            message = str(e)
         
         if success:
             # Read decrypted file and encode as base64
@@ -106,8 +128,14 @@ def decrypt_file():
                 decrypted_data = base64.b64encode(f.read()).decode()
             
             # Cleanup
-            os.unlink(temp_input.name)
-            os.unlink(temp_output.name)
+            try:
+                os.unlink(temp_input.name)
+            except OSError:
+                pass  # File might already be deleted
+            try:
+                os.unlink(temp_output.name)
+            except OSError:
+                pass  # File might already be deleted
             
             return jsonify({
                 'success': True,
