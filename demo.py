@@ -42,7 +42,11 @@ This file will be encrypted and then decrypted to verify functionality.
         
         # Initialize encryption engine
         engine = EncryptionEngine()
-        password = "Demo_Password_2025!"
+        # Use environment variable or generate random password for demo
+        import os
+        password = os.environ.get('DEMO_PASSWORD', engine.generate_secure_password())
+        if 'DEMO_PASSWORD' not in os.environ:
+            print(f"🔑 Generated demo password: {password}")
         
         # Encrypt the file
         encrypted_file = temp_path / "demo_file.enc"

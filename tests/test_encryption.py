@@ -19,23 +19,24 @@ class TestEncryptionEngine:
     def test_init_default(self):
         """Test engine initialization with defaults"""
         engine = EncryptionEngine()
-        assert engine.algorithm == 'AES-256-GCM'
-        assert engine.pbkdf2_iterations == 100000
+        assert engine.algorithm == 'AES-256-GCM', f"Expected AES-256-GCM, got {engine.algorithm}"
+        assert engine.pbkdf2_iterations == 100000, f"Expected 100000 iterations, got {engine.pbkdf2_iterations}"
     
     def test_init_custom(self):
         """Test engine initialization with custom parameters"""
         engine = EncryptionEngine(algorithm='AES-256-CBC', pbkdf2_iterations=150000)
-        assert engine.algorithm == 'AES-256-CBC'
-        assert engine.pbkdf2_iterations == 150000
+        assert engine.algorithm == 'AES-256-CBC', f"Expected AES-256-CBC, got {engine.algorithm}"
+        assert engine.pbkdf2_iterations == 150000, f"Expected 150000 iterations, got {engine.pbkdf2_iterations}"
     
     def test_key_derivation(self):
         """Test key derivation from password"""
         engine = EncryptionEngine()
-        password = "test_password_123"
+        # Use a constant for testing, but mark it clearly as test data
+        TEST_PASSWORD = "test_password_123"  # Test constant - not for production
         salt = b'test_salt_16_bytes'
         
-        key1 = engine._derive_key(password, salt)
-        key2 = engine._derive_key(password, salt)
+        key1 = engine._derive_key(TEST_PASSWORD, salt)
+        key2 = engine._derive_key(TEST_PASSWORD, salt)
         
         # Same password and salt should produce same key
         assert key1 == key2

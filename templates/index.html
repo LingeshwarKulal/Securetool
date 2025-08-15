@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Secure File Encryption Tool - Zplus Cyber Secure Technologies</title>
     <style>
         * {
@@ -658,20 +661,58 @@
         });
 
         function showResult(resultDiv, message, type) {
-            resultDiv.innerHTML = `<div class="result ${type}">${message}</div>`;
+            // Sanitize message to prevent XSS
+            const sanitizedMessage = message.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            resultDiv.innerHTML = `<div class="result ${type}">${sanitizedMessage}</div>`;
         }
 
         function createDownloadLink(base64Data, filename) {
-            const byteCharacters = atob(base64Data);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray]);
+            // Sanitize filename
+            const sanitizedFilename = filename.replace(/[<>"'&]/g, '');
             
-            const url = URL.createObjectURL(blob);
-            return `<a href="${url}" download="${filename}" class="download-btn">Download ${filename}</a>`;
+            try {
+                const byteCharacters = atob(base64Data);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray]);
+                
+                const url = URL.createObjectURL(blob);
+                return `<a href="${url}" download="${sanitizedFilename}" class="download-btn">Download ${sanitizedFilename}</a>`;
+            } catch (error) {
+                console.error('Error creating download link:', error);
+                return '<span class="error">Download failed</span>';
+            }
+        }
+
+        // Password strength validation
+        function validatePassword(password) {
+            if (password.length < 8) {
+                return { valid: false, message: 'Password must be at least 8 characters long' };
+            }
+            if (password.length > 128) {
+                return { valid: false, message: 'Password too long (max 128 characters)' };
+            }
+            return { valid: true, message: 'Password valid' };
+        }
+
+        // File validation
+        function validateFile(file) {
+            const maxSize = 16 * 1024 * 1024; // 16MB
+            const dangerousExtensions = ['.exe', '.bat', '.cmd', '.com', '.pif', '.scr', '.vbs', '.js', '.jar', '.ps1', '.sh', '.php', '.asp', '.jsp', '.pl', '.py'];
+            
+            if (file.size > maxSize) {
+                return { valid: false, message: 'File too large (max 16MB)' };
+            }
+            
+            const extension = '.' + file.name.split('.').pop().toLowerCase();
+            if (dangerousExtensions.includes(extension)) {
+                return { valid: false, message: `File type ${extension} not allowed for security reasons` };
+            }
+            
+            return { valid: true, message: 'File valid' };
         }
     </script>
 </body>

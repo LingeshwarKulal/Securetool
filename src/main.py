@@ -31,8 +31,9 @@ def main():
             icon_path = os.path.join(os.path.dirname(__file__), "..", "assets", "icon.ico")
             if os.path.exists(icon_path):
                 root.iconbitmap(icon_path)
-        except Exception:
-            pass  # Icon not critical for functionality
+        except Exception as e:
+            # Icon not critical for functionality, but log the issue
+            print(f"Warning: Could not load application icon: {e}")
         
         # Create main application window
         app = MainWindow(root)

@@ -439,8 +439,9 @@ class FileManager:
             try:
                 shutil.rmtree(self.temp_dir)
                 self.temp_dir = None
-            except Exception:
-                pass  # Best effort cleanup
+            except (OSError, IOError) as e:
+                # Best effort cleanup - log but don't fail
+                print(f"Warning: Could not clean up temp directory: {e}")
     
     def _count_files_in_folder(self, folder_path):
         """Count total files in a folder recursively"""
@@ -494,7 +495,8 @@ class FileManager:
                     stats['file_types'][ext]['count'] += 1
                     stats['file_types'][ext]['size'] += file_size
                     
-            except Exception:
+            except (OSError, IOError) as e:
+                print(f"Warning: Could not access file {file_path}: {e}")
                 continue  # Skip files that can't be accessed
         
         return stats

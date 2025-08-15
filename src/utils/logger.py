@@ -59,8 +59,9 @@ def setup_logging(log_level=logging.INFO, log_to_file=True, log_dir=None):
         # Set secure permissions on log file
         try:
             os.chmod(log_file, 0o600)
-        except Exception:
-            pass  # Best effort on Windows
+        except OSError as e:
+            # Best effort on Windows - log but don't fail
+            print(f"Warning: Could not set secure log file permissions: {e}", file=sys.stderr)
     
     return logger
 
@@ -119,8 +120,8 @@ class SecurityLogger:
         # Set restrictive permissions
         try:
             os.chmod(security_log_file, 0o600)
-        except Exception:
-            pass
+        except OSError as e:
+            print(f"Warning: Could not set secure permissions on security log: {e}", file=sys.stderr)
     
     def log_encryption_start(self, file_path, algorithm):
         """Log encryption operation start"""
@@ -291,8 +292,8 @@ class LogAnalyzer:
                             })
                         except ValueError:
                             continue  # Skip malformed timestamp
-        except Exception:
-            pass  # Handle file access errors gracefully
+        except (IOError, OSError) as e:
+            print(f"Warning: Could not read security log file: {e}", file=sys.stderr)
         
         return events
     
@@ -352,8 +353,8 @@ class LogAnalyzer:
                                 durations.append(duration)
                         except (ValueError, IndexError):
                             continue
-        except Exception:
-            pass
+        except (IOError, OSError) as e:
+            print(f"Warning: Could not read performance log: {e}", file=sys.stderr)
         
         if durations:
             stats['total_operations'] = len(durations)
@@ -382,5 +383,6 @@ class LogAnalyzer:
             try:
                 if log_file.stat().st_mtime < cutoff_time:
                     log_file.unlink()
-            except Exception:
+            except (OSError, IOError) as e:
+                print(f"Warning: Could not delete old log file {log_file}: {e}", file=sys.stderr)
                 continue  # Skip files that can't be deleted

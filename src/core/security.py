@@ -386,8 +386,9 @@ class AuditLogger:
             # Set secure permissions (owner read/write only)
             try:
                 os.chmod(self.log_file, 0o600)
-            except Exception:
-                pass  # Best effort on Windows
+            except OSError as e:
+                # Log the error but don't fail - best effort on Windows
+                print(f"Warning: Could not set secure file permissions: {e}")
     
     def log_event(self, event_type, details, user_id=None):
         """
@@ -411,8 +412,10 @@ class AuditLogger:
             try:
                 with open(self.log_file, 'a') as f:
                     f.write(f"{timestamp} | {event_type} | {user_id or 'unknown'} | {details}\n")
-            except Exception:
-                pass  # Don't fail the operation if logging fails
+            except (IOError, OSError) as e:
+                # Don't fail the operation if logging fails, but could log to stderr
+                import sys
+                print(f"Warning: Failed to write to audit log: {e}", file=sys.stderr)
         
         return log_entry
     

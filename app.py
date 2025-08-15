@@ -187,4 +187,8 @@ def decrypt_file():
 app = app
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Never use debug=True in production!
+    # Use environment variable to control debug mode
+    import os
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    app.run(debug=debug_mode, host='127.0.0.1')
